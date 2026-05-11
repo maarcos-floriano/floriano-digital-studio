@@ -9,10 +9,9 @@ import {
   Headphones,
   LayoutTemplate,
   Link as LinkIcon,
-  Megaphone,
   MessageCircle,
-  MousePointerClick,
   ShieldCheck,
+  Star,
   Store,
   Wand2,
   Zap,
@@ -20,10 +19,9 @@ import {
 import { motion } from 'framer-motion'
 import { clsx } from 'clsx'
 
-const contactUrl = '#bio'
+const fallbackBuyUrl = '#comprar'
 const portfolioUrl = 'https://maarcos-floriano.github.io/my-portfolio/'
 const githubUrl = 'https://github.com/maarcos-floriano'
-const linkedinUrl = 'https://www.linkedin.com/in/marcos-oliveira-floriano'
 
 const services = [
   {
@@ -31,40 +29,48 @@ const services = [
     name: 'Prospecção B2B',
     icon: DatabaseZap,
     price: 'R$ 297+',
-    label: 'Pesquisa comercial',
+    label: 'Leads qualificados',
+    promise: 'Receba uma lista organizada de empresas para iniciar sua abordagem comercial.',
     description:
-      'Pesquisa sob demanda de empresas, nichos e oportunidades para iniciar campanhas de venda com mais criterio.',
-    bullets: ['Segmentacao por nicho', 'Planilha organizada', 'Fontes e criterios documentados'],
+      'Pesquisa sob demanda de negócios, segmentos e oportunidades com critérios definidos antes da entrega.',
+    bullets: ['Segmentação por nicho e região', 'Planilha pronta para usar', 'Critérios e fontes documentados'],
+    buyUrl: fallbackBuyUrl,
   },
   {
     id: 'imagem-profissional',
     name: 'Imagem profissional',
     icon: BadgeCheck,
     price: 'R$ 197+',
-    label: 'Perfil e posicionamento',
+    label: 'Perfil que passa confiança',
+    promise: 'Melhore sua apresentação no Instagram, WhatsApp e canais de venda.',
     description:
-      'Ajuste de bio, apresentacao, destaques, tom de voz e estrutura visual para transmitir mais confianca.',
-    bullets: ['Bio comercial', 'Copy de apresentacao', 'Direcao visual simples'],
+      'Ajuste de bio, posicionamento, destaques, texto de apresentação e direção visual básica.',
+    bullets: ['Bio comercial', 'Texto de apresentação', 'Orientação visual para perfil'],
+    buyUrl: fallbackBuyUrl,
   },
   {
     id: 'idv-starter',
-    name: 'ID Visual Starter',
+    name: 'Identidade Visual Starter',
     icon: Brush,
     price: 'R$ 697+',
-    label: 'Marca inicial',
+    label: 'Marca com cara profissional',
+    promise: 'Tenha uma identidade visual inicial para começar a vender com mais autoridade.',
     description:
-      'Kit visual para pequenos negocios que precisam sair do improviso e parecer profissionais rapidamente.',
-    bullets: ['Logo base', 'Paleta e tipografia', 'Aplicacoes para redes sociais'],
+      'Kit visual para pequenos negócios que precisam sair do improviso e organizar a primeira presença de marca.',
+    bullets: ['Logo base', 'Paleta e tipografia', 'Aplicações para redes sociais'],
+    buyUrl: fallbackBuyUrl,
   },
   {
     id: 'site-express',
     name: 'Site Express',
     icon: LayoutTemplate,
     price: 'R$ 997+',
-    label: 'Mais vendido',
+    label: 'Página pronta para vender',
+    promise: 'Coloque seu serviço, produto ou negócio no ar com uma landing page profissional.',
     description:
-      'Landing page objetiva para apresentar oferta, gerar contato e colocar sua empresa no ar com acabamento.',
-    bullets: ['Pagina responsiva', 'Copy de venda', 'Publicacao e SEO base'],
+      'Página de apresentação com copy, visual responsivo, botões de contato e estrutura para conversão.',
+    bullets: ['Landing page responsiva', 'Texto de venda', 'Publicação e SEO básico'],
+    buyUrl: fallbackBuyUrl,
     featured: true,
   },
   {
@@ -72,49 +78,59 @@ const services = [
     name: 'StockZapAI',
     icon: Bot,
     price: 'Setup + mensal',
-    label: 'Automacao comercial',
+    label: 'Automação com IA',
+    promise: 'Automatize atendimento, operação e rotinas comerciais com IA e WhatsApp.',
     description:
-      'Fluxos com IA, WhatsApp, dashboard e rotinas comerciais para negocios que precisam atender melhor.',
-    bullets: ['Diagnostico', 'Setup do fluxo', 'Treinamento inicial'],
+      'Configuração de fluxos inteligentes para organizar demandas, responder melhor e reduzir tarefas repetitivas.',
+    bullets: ['Diagnóstico inicial', 'Setup do fluxo', 'Treinamento para uso'],
+    buyUrl: fallbackBuyUrl,
   },
   {
     id: 'suporte-tecnico',
     name: 'Suporte remoto',
     icon: Headphones,
     price: 'R$ 97+',
-    label: 'Resolucao rapida',
+    label: 'Ajuda rápida',
+    promise: 'Resolva problemas digitais sem perder horas tentando descobrir sozinho.',
     description:
-      'Atendimento remoto para sites, dominios, ferramentas, e-mails, configuracoes e problemas digitais.',
-    bullets: ['Atendimento remoto', 'Checklist do problema', 'Orientacao final'],
+      'Atendimento remoto para sites, domínios, e-mails, ferramentas, configurações e ajustes técnicos.',
+    bullets: ['Atendimento remoto', 'Diagnóstico do problema', 'Orientação final'],
+    buyUrl: fallbackBuyUrl,
   },
   {
     id: 'automacao-ia',
-    name: 'Automacao com IA',
+    name: 'Automação com IA',
     icon: Wand2,
     price: 'R$ 697+',
-    label: 'Fluxos inteligentes',
+    label: 'Processos inteligentes',
+    promise: 'Crie fluxos automatizados para atendimento, conteúdo, leads e tarefas internas.',
     description:
-      'Automacoes para atendimento, conteudo, captura de leads e rotinas internas usando IA e integracoes.',
-    bullets: ['Mapeamento do fluxo', 'Automacao configurada', 'Documentacao de uso'],
+      'Mapeamos uma rotina do seu negócio e criamos uma automação prática para ganhar tempo e consistência.',
+    bullets: ['Mapeamento do processo', 'Automação configurada', 'Documentação de uso'],
+    buyUrl: fallbackBuyUrl,
   },
 ]
 
+const trustPoints = [
+  'Serviços objetivos, com escopo claro antes da compra.',
+  'Entrega pensada para pequenos negócios e prestadores de serviço.',
+  'Soluções digitais com visual, tecnologia e automação no mesmo lugar.',
+]
+
 const bioLinks = [
-  ['Ver todos os servicos', '#servicos', Store],
-  ['Solicitar orcamento', contactUrl, MessageCircle],
-  ['Portfolio de desenvolvimento', portfolioUrl, Code2],
-  ['LinkedIn do Marcos', linkedinUrl, BadgeCheck],
-  ['GitHub do Marcos', githubUrl, LinkIcon],
+  ['Comprar ou solicitar orçamento', '#servicos', Store],
+  ['Ver portfólio técnico', portfolioUrl, Code2],
+  ['GitHub', githubUrl, LinkIcon],
 ]
 
 function App() {
   return (
     <main className="min-h-screen bg-[#090b10] text-white">
       <Hero />
-      <OfferStrip />
+      <ServiceStrip />
       <Services />
-      <KirvanoPlan />
-      <BioHub />
+      <Trust />
+      <BuyHub />
       <FinalCTA />
     </main>
   )
@@ -124,7 +140,7 @@ function Hero() {
   return (
     <section id="top" className="relative overflow-hidden border-b border-white/10 bg-[#090b10]">
       <div className="absolute left-0 top-0 h-full w-2 bg-[#19ff8f]" />
-      <div className="mx-auto min-h-[92svh] max-w-7xl px-5 py-5 md:px-8 lg:px-10">
+      <div className="mx-auto min-h-[90svh] max-w-7xl px-5 py-5 md:px-8 lg:px-10">
         <header className="flex items-center justify-between border-b border-white/10 pb-5">
           <a href="#top" className="flex items-center gap-3">
             <span className="grid size-11 place-items-center rounded-[8px] bg-[#19ff8f] text-base font-black text-[#07100b]">
@@ -139,20 +155,20 @@ function Hero() {
           </a>
 
           <nav className="hidden items-center gap-7 text-sm font-semibold text-white/72 md:flex">
-            <a href="#servicos" className="hover:text-white">Servicos</a>
-            <a href="#kirvano" className="hover:text-white">Kirvano</a>
-            <a href="#bio" className="hover:text-white">Link da bio</a>
+            <a href="#servicos" className="hover:text-white">Serviços</a>
+            <a href="#comprar" className="hover:text-white">Comprar</a>
+            <a href="#contato" className="hover:text-white">Contato</a>
           </nav>
 
           <a
-            href="#bio"
+            href="#servicos"
             className="inline-flex items-center gap-2 rounded-[8px] bg-white px-4 py-3 text-sm font-black text-[#090b10] transition hover:bg-[#19ff8f]"
           >
-            Falar agora <MessageCircle size={17} />
+            Ver serviços <Store size={17} />
           </a>
         </header>
 
-        <div className="grid gap-10 py-16 md:grid-cols-[1.06fr_.94fr] md:py-24 lg:py-28">
+        <div className="grid gap-10 py-16 md:grid-cols-[1.05fr_.95fr] md:py-24">
           <motion.div
             className="flex flex-col justify-center"
             initial={{ opacity: 0, y: 22 }}
@@ -161,16 +177,16 @@ function Hero() {
           >
             <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-[8px] border border-[#19ff8f]/40 bg-[#19ff8f]/10 px-3 py-2 text-sm font-bold text-[#19ff8f]">
               <Zap size={16} />
-              Sites, IA, marca e vendas no mesmo plano
+              Serviços digitais para negócios que querem vender melhor
             </div>
 
-            <h1 className="max-w-5xl text-[clamp(3rem,8vw,7.7rem)] font-black uppercase leading-[.88] tracking-normal">
-              Sua operacao digital pronta para vender.
+            <h1 className="max-w-5xl text-[clamp(3rem,8vw,7.4rem)] font-black uppercase leading-[.88] tracking-normal">
+              Compre soluções digitais prontas para o seu negócio.
             </h1>
 
-            <p className="mt-7 max-w-2xl text-lg font-medium leading-8 text-white/74 md:text-xl">
-              Criamos presenca digital, paginas de venda, automacoes, prospeccao B2B, identidade
-              visual e suporte tecnico para pequenos negocios que querem parar de improvisar.
+            <p className="mt-7 max-w-2xl text-lg font-medium leading-8 text-white/76 md:text-xl">
+              Sites, identidade visual, melhoria de imagem, prospecção B2B, suporte técnico,
+              automações com IA e StockZapAI em um só lugar.
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
@@ -178,13 +194,13 @@ function Hero() {
                 href="#servicos"
                 className="inline-flex items-center gap-2 rounded-[8px] bg-[#19ff8f] px-5 py-4 text-sm font-black uppercase tracking-wide text-[#07100b] transition hover:-translate-y-0.5"
               >
-                Ver catalogo de servicos <ArrowUpRight size={18} />
+                Escolher serviço <ArrowUpRight size={18} />
               </a>
               <a
-                href="#kirvano"
+                href="#comprar"
                 className="inline-flex items-center gap-2 rounded-[8px] border border-white/18 px-5 py-4 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-[#090b10]"
               >
-                Ver plano de checkout <MousePointerClick size={18} />
+                Links de compra <MessageCircle size={18} />
               </a>
             </div>
           </motion.div>
@@ -197,35 +213,27 @@ function Hero() {
           >
             <div className="w-full rounded-[8px] border border-white/12 bg-white p-3 text-[#090b10] shadow-[0_40px_140px_rgba(0,0,0,.4)]">
               <div className="rounded-[8px] border-2 border-[#090b10]">
-                <div className="flex items-center justify-between border-b-2 border-[#090b10] bg-[#19ff8f] p-4">
-                  <p className="font-black uppercase tracking-wide">Sistema comercial</p>
-                  <span className="rounded-[6px] bg-[#090b10] px-3 py-1 text-xs font-black text-white">
-                    Online
-                  </span>
+                <div className="border-b-2 border-[#090b10] bg-[#19ff8f] p-4">
+                  <p className="text-sm font-black uppercase tracking-[.18em]">Catálogo de soluções</p>
+                  <p className="mt-2 text-3xl font-black uppercase leading-none">Escolha. Compre. Receba.</p>
                 </div>
 
                 <div className="grid gap-3 p-4">
-                  {['Instagram', 'Site de servicos', 'Checkout Kirvano', 'Entrega'].map((item, index) => (
-                    <div key={item} className="grid grid-cols-[42px_1fr] items-center gap-3">
-                      <span className="grid size-10 place-items-center rounded-[8px] bg-[#090b10] text-sm font-black text-white">
-                        {index + 1}
-                      </span>
-                      <div className="rounded-[8px] border-2 border-[#090b10] bg-[#f5f5f0] p-3 font-black">
-                        {item}
-                      </div>
-                    </div>
+                  {services.slice(0, 5).map((service) => (
+                    <a
+                      key={service.id}
+                      href={service.buyUrl}
+                      className="flex items-center justify-between rounded-[8px] border-2 border-[#090b10] bg-[#f5f5f0] p-3 font-black transition hover:bg-[#19ff8f]"
+                    >
+                      <span>{service.name}</span>
+                      <span>{service.price}</span>
+                    </a>
                   ))}
                 </div>
 
-                <div className="grid grid-cols-2 border-t-2 border-[#090b10]">
-                  <div className="border-r-2 border-[#090b10] p-4">
-                    <p className="text-4xl font-black">7</p>
-                    <p className="mt-1 text-sm font-bold text-slate-600">ofertas iniciais</p>
-                  </div>
-                  <div className="bg-[#111827] p-4 text-white">
-                    <p className="text-4xl font-black">IA</p>
-                    <p className="mt-1 text-sm font-bold text-white/70">como acelerador</p>
-                  </div>
+                <div className="border-t-2 border-[#090b10] bg-[#111827] p-4 text-white">
+                  <p className="text-sm font-bold uppercase tracking-[.18em] text-[#19ff8f]">Atendimento direto</p>
+                  <p className="mt-2 text-2xl font-black">Compre pelo link ou peça orçamento.</p>
                 </div>
               </div>
             </div>
@@ -236,14 +244,18 @@ function Hero() {
   )
 }
 
-function OfferStrip() {
+function ServiceStrip() {
   return (
     <section className="border-b border-white/10 bg-[#111827] px-5 py-4 md:px-8 lg:px-10">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 text-sm font-black uppercase tracking-wide">
-        {['Site Express', 'StockZapAI', 'ID Visual', 'Suporte remoto', 'Automacao IA', 'Prospecção B2B'].map((item) => (
-          <span key={item} className="rounded-[8px] border border-white/12 bg-white/5 px-4 py-2 text-white/82">
-            {item}
-          </span>
+        {services.map((service) => (
+          <a
+            key={service.id}
+            href={`#${service.id}`}
+            className="rounded-[8px] border border-white/12 bg-white/5 px-4 py-2 text-white/86 transition hover:bg-[#19ff8f] hover:text-[#090b10]"
+          >
+            {service.name}
+          </a>
         ))}
       </div>
     </section>
@@ -257,24 +269,25 @@ function Services() {
         <div className="mb-12 grid gap-6 md:grid-cols-[.88fr_1.12fr] md:items-end">
           <div>
             <p className="mb-3 text-sm font-black uppercase tracking-[.22em] text-[#0f766e]">
-              Catalogo comercial
+              Serviços disponíveis
             </p>
             <h2 className="text-4xl font-black uppercase leading-[.96] md:text-6xl">
-              Escolha a oferta, feche no checkout, entregue com processo.
+              Escolha o que você precisa e compre pelo link.
             </h2>
           </div>
           <p className="max-w-xl text-lg font-medium leading-8 text-slate-700">
-            A nova IDV do projeto e mais direta: alto contraste, linguagem de venda, pacotes claros e
-            chamadas explicitas para orcamento ou checkout.
+            Cada serviço tem uma entrega objetiva. Se o seu caso precisar de ajuste no escopo, você
+            pode solicitar orçamento antes da compra.
           </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {services.map((service, index) => (
             <motion.article
+              id={service.id}
               key={service.id}
               className={clsx(
-                'flex min-h-[430px] flex-col justify-between rounded-[8px] border-2 p-5 shadow-[8px_8px_0_rgba(9,11,16,.18)]',
+                'flex min-h-[455px] scroll-mt-8 flex-col justify-between rounded-[8px] border-2 p-5 shadow-[8px_8px_0_rgba(9,11,16,.18)]',
                 service.featured
                   ? 'border-[#090b10] bg-[#19ff8f]'
                   : 'border-[#090b10] bg-white',
@@ -295,7 +308,8 @@ function Services() {
                 </div>
 
                 <h3 className="text-3xl font-black uppercase leading-none">{service.name}</h3>
-                <p className="mt-4 text-base font-medium leading-7 text-slate-700">{service.description}</p>
+                <p className="mt-4 text-lg font-black leading-7">{service.promise}</p>
+                <p className="mt-3 text-base font-medium leading-7 text-slate-700">{service.description}</p>
               </div>
 
               <div>
@@ -309,10 +323,10 @@ function Services() {
                   ))}
                 </div>
                 <a
-                  href={contactUrl}
+                  href={service.buyUrl}
                   className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#090b10] px-4 py-4 text-sm font-black uppercase tracking-wide text-white transition hover:bg-[#0f766e]"
                 >
-                  Solicitar orcamento <ArrowUpRight size={17} />
+                  Comprar este serviço <ArrowUpRight size={17} />
                 </a>
               </div>
             </motion.article>
@@ -323,67 +337,45 @@ function Services() {
   )
 }
 
-function KirvanoPlan() {
+function Trust() {
   return (
-    <section id="kirvano" className="bg-[#090b10] px-5 py-20 text-white md:px-8 lg:px-10">
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.8fr_1.2fr]">
+    <section className="bg-white px-5 py-18 text-[#090b10] md:px-8 lg:px-10">
+      <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-[.9fr_1.1fr] md:items-center">
         <div>
-          <p className="mb-3 text-sm font-black uppercase tracking-[.22em] text-[#19ff8f]">
-            Esteira Kirvano
+          <p className="mb-3 text-sm font-black uppercase tracking-[.22em] text-[#0f766e]">
+            Por que comprar aqui
           </p>
-          <h2 className="text-4xl font-black uppercase leading-[.96] md:text-6xl">
-            Produtos separados para vender sem bagunca.
+          <h2 className="text-4xl font-black uppercase leading-[.96] md:text-5xl">
+            Serviço digital sem enrolação.
           </h2>
-          <p className="mt-6 text-lg font-medium leading-8 text-white/70">
-            O site apresenta as ofertas. A Kirvano entra como checkout. O Instagram manda trafego para
-            a bio. Depois cada servico pode ganhar link proprio de compra.
-          </p>
         </div>
 
-        <div className="rounded-[8px] border-2 border-white bg-white text-[#090b10]">
-          <div className="grid grid-cols-[1.2fr_.7fr_.7fr] border-b-2 border-[#090b10] bg-[#19ff8f] p-4 text-sm font-black uppercase">
-            <span>Produto</span>
-            <span>Tipo</span>
-            <span>Preco</span>
-          </div>
-          {services.map((service) => (
-            <div key={service.id} className="grid gap-3 border-b-2 border-[#090b10] p-4 last:border-b-0 md:grid-cols-[1.2fr_.7fr_.7fr] md:items-center">
-              <div>
-                <p className="font-black uppercase">{service.name}</p>
-                <p className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-500">{service.id}</p>
-              </div>
-              <p className="font-bold text-slate-700">{service.id === 'stockzap-ai' ? 'SaaS' : 'Servico'}</p>
-              <p className="font-black">{service.price}</p>
+        <div className="grid gap-3">
+          {trustPoints.map((point) => (
+            <div key={point} className="flex items-start gap-3 rounded-[8px] border-2 border-[#090b10] bg-[#f5f5f0] p-4">
+              <ShieldCheck className="mt-0.5 shrink-0 text-[#0f766e]" size={22} />
+              <p className="font-bold leading-7 text-slate-800">{point}</p>
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="mx-auto mt-8 max-w-7xl rounded-[8px] border border-[#19ff8f]/40 bg-[#19ff8f]/10 p-4">
-        <p className="flex items-start gap-2 text-sm font-semibold leading-6 text-white/78">
-          <ShieldCheck className="mt-0.5 shrink-0 text-[#19ff8f]" size={18} />
-          Prospecção B2B deve ser vendida como pesquisa sob demanda, com criterios e fontes, evitando
-          promessa de bases pessoais sem origem ou qualquer oferta que pareça violar LGPD.
-        </p>
       </div>
     </section>
   )
 }
 
-function BioHub() {
+function BuyHub() {
   return (
-    <section id="bio" className="bg-[#19ff8f] px-5 py-20 text-[#090b10] md:px-8 lg:px-10">
+    <section id="comprar" className="bg-[#19ff8f] px-5 py-20 text-[#090b10] md:px-8 lg:px-10">
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[.92fr_1.08fr] md:items-center">
         <div>
           <p className="mb-3 text-sm font-black uppercase tracking-[.22em] text-[#0b3b25]">
-            Link da bio
+            Comprar agora
           </p>
           <h2 className="text-4xl font-black uppercase leading-[.96] md:text-6xl">
-            Um hub simples para colocar no Instagram.
+            Escolha o serviço e finalize pelo link de compra.
           </h2>
           <p className="mt-6 max-w-xl text-lg font-semibold leading-8 text-[#12311f]">
-            Use esta secao como link principal enquanto os checkouts da Kirvano entram no ar. Depois,
-            cada botao pode apontar para uma oferta especifica.
+            Clique no serviço desejado para contratar ou solicitar as informações antes de fechar.
           </p>
         </div>
 
@@ -395,16 +387,29 @@ function BioHub() {
               </div>
               <h3 className="mt-4 text-2xl font-black uppercase">Floriano Digital Studio</h3>
               <p className="mt-2 text-sm font-semibold leading-6 text-slate-600">
-                Sites, IA, automacao, suporte e presenca digital para negocios.
+                Compre serviços digitais para melhorar sua presença, venda e operação.
               </p>
             </div>
 
             <div className="mt-5 grid gap-3">
+              {services.slice(0, 5).map((service) => (
+                <a
+                  key={service.id}
+                  href={service.buyUrl}
+                  className="flex items-center justify-between rounded-[8px] border-2 border-[#090b10] bg-[#f5f5f0] px-4 py-4 text-sm font-black uppercase transition hover:bg-[#19ff8f]"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <service.icon size={17} /> {service.name}
+                  </span>
+                  <ArrowUpRight size={16} />
+                </a>
+              ))}
+
               {bioLinks.map(([label, href, Icon]) => (
                 <a
                   key={label as string}
                   href={href as string}
-                  className="flex items-center justify-between rounded-[8px] border-2 border-[#090b10] bg-[#f5f5f0] px-4 py-4 text-sm font-black uppercase transition hover:bg-[#19ff8f]"
+                  className="flex items-center justify-between rounded-[8px] border-2 border-[#090b10] bg-white px-4 py-4 text-sm font-black uppercase transition hover:bg-[#19ff8f]"
                 >
                   <span className="inline-flex items-center gap-2">
                     <Icon size={17} /> {label as string}
@@ -422,19 +427,19 @@ function BioHub() {
 
 function FinalCTA() {
   return (
-    <section className="bg-white px-5 py-16 text-[#090b10] md:px-8 lg:px-10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 rounded-[8px] border-2 border-[#090b10] bg-[#f5f5f0] p-6 shadow-[10px_10px_0_rgba(9,11,16,.18)] md:flex-row md:items-center md:justify-between md:p-8">
+    <section id="contato" className="bg-[#090b10] px-5 py-16 text-white md:px-8 lg:px-10">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 rounded-[8px] border-2 border-white bg-[#111827] p-6 shadow-[10px_10px_0_rgba(25,255,143,.25)] md:flex-row md:items-center md:justify-between md:p-8">
         <div>
-          <Megaphone className="mb-5 text-[#0f766e]" size={36} />
+          <Star className="mb-5 text-[#19ff8f]" size={36} />
           <h2 className="max-w-3xl text-4xl font-black uppercase leading-[.96] md:text-6xl">
-            Proximo passo: conectar WhatsApp e checkouts reais.
+            Seu negócio precisa parecer tão bom quanto o serviço que entrega.
           </h2>
         </div>
         <a
-          href="#bio"
-          className="inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#090b10] px-6 py-4 text-sm font-black uppercase tracking-wide text-white transition hover:bg-[#0f766e]"
+          href="#servicos"
+          className="inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#19ff8f] px-6 py-4 text-sm font-black uppercase tracking-wide text-[#07100b] transition hover:bg-white"
         >
-          Ir para links de contato <ArrowUpRight size={18} />
+          Ver serviços disponíveis <ArrowUpRight size={18} />
         </a>
       </div>
     </section>
